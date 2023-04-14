@@ -37,7 +37,6 @@ exports.postReminders = (req, res, next) => {
     date: date,
     username: username,
   });
-  console.log(reminder);
   reminder
     .save()
     .then((result) => {
