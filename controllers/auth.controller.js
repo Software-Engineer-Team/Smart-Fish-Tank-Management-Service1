@@ -31,7 +31,6 @@ exports.Login = (req, res, next) => {
 exports.Register = (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
-  const name = req.body.name;
   const ada_key = req.body.ada_key;
   User.findOne({ username })
     .then((user) => {
@@ -46,7 +45,6 @@ exports.Register = (req, res, next) => {
             const newUser = new User({
               username: username,
               password: result,
-              name: name,
               ada_key: ada_key,
             });
             newUser
