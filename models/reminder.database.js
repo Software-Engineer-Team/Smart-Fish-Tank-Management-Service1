@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 const ReminderSchema = new mongoose.Schema(
   {
-    username: {
-      type: String,
+    user_id: {
+      type: mongoose.Types.ObjectId,
       require: true,
     },
     date: {
@@ -11,6 +11,10 @@ const ReminderSchema = new mongoose.Schema(
       require: true,
     },
     title: { type: String, require: true },
+    description: {
+      type: String,
+      require: true,
+    },
   },
   {
     timestamps: false,

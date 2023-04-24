@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 
 const reminderRoute = require("./routes/reminder.route");
 const authRoute = require("./routes/auth.route");
+const dataRoute = require("./routes/data.route");
 
 app.use(bodyParser.json());
 
@@ -23,6 +24,8 @@ app.use((req, res, next) => {
 app.use(authRoute);
 
 app.use(reminderRoute);
+
+app.use(dataRoute);
 
 mongoose
   .connect(

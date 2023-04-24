@@ -1,6 +1,17 @@
 ###
-GET http://localhost:3000/reminder
+GET http://localhost:3000/reminder/643bd5cada7a761f0332f5ce
 
+###
+POST http://localhost:3000/reminder
+Content-Type: application/json
+
+{
+    "title": "Hi",
+    "date": "2023-04-14T18:10:02.381+00:00",
+    "user_id" : "507f1f77bcf86cd799439011",
+    "description" : "Hello"
+
+}
 
 ###
 POST http://localhost:3000/register
@@ -21,4 +32,13 @@ Content-Type: application/json
 {
     "username": "admin",
     "password": "123456"
+}
+
+###
+GET http://localhost:3000/data/tempAll
+Content-Type: application/json
+
+{
+    "username": "minhthuctp",
+    "ada_key": "aio_Rlcq317mWjsW0Y9BX5B1sPPaBqqR"
 }

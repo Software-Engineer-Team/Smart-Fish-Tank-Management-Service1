@@ -1,8 +1,8 @@
 const Reminder = require("../models/reminder.database");
 
 exports.getReminders = (req, res, next) => {
-  const username = "admin";
-  Reminder.find({ username })
+  const user_id = req.params.user_id;
+  Reminder.find({ user_id: user_id })
     .then((reminders) => {
       result1 = [];
       result2 = [];
@@ -19,6 +19,12 @@ exports.getReminders = (req, res, next) => {
           result2.push(reminders[i]);
         }
       }
+      result1.sort(function (a, b) {
+        return new Date(a.date) - new Date(b.date);
+      });
+      result2.sort(function (a, b) {
+        return new Date(a.date) - new Date(b.date);
+      });
       return res.json({
         message: "Successful",
         today: result1,
@@ -30,12 +36,14 @@ exports.getReminders = (req, res, next) => {
 
 exports.postReminders = (req, res, next) => {
   const title = req.body.title;
+  const description = req.body.description;
   const date = req.body.date;
-  const username = req.body.username;
+  const user_id = req.body.user_id;
   const reminder = new Reminder({
     title: title,
     date: date,
-    username: username,
+    user_id: user_id,
+    description: description,
   });
   reminder
     .save()
