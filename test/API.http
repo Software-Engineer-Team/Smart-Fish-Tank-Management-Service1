@@ -42,3 +42,28 @@ Content-Type: application/json
     "username": "minhthuctp",
     "ada_key": "aio_Rlcq317mWjsW0Y9BX5B1sPPaBqqR"
 }
+
+###
+POST http://localhost:3000/feeding
+Content-Type: application/json
+
+{
+    "user_id": "643bd5cada7a761f0332f5ce",
+    "hour" : 10,
+    "minute" : 11,
+    "level" : 1
+}
+###
+GET http://localhost:3000/feeding/643bd5cada7a761f0332f5ce
+
+###
+PATCH http://localhost:3000/feeding
+Content-Type: application/json
+
+{
+    "_id": "644eae5061053e0de38e241c",
+    "user_id": "643bd5cada7a761f0332f5ce",
+    "hour" : 5,
+    "minute" : 4,
+    "level" : 4
+}
