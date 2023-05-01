@@ -75,15 +75,25 @@ exports.patchFeeding = (req, res, next) => {
   const minute = req.body.minute;
   const level = req.body.level;
   const user_id = req.body.user_id;
-  Feeding.findByIdAndUpdate(id, { hour, minute, level })
-    .then((result) => {
-      console.log(result);
-      return res.json({
-        message: "Feeding update successfully!",
-        feeding: result,
-      });
+  Feeding.find({ hour: hour, minute: minute, user_id: user_id })
+    .then((feeding) => {
+      if (feeding.length != 0) {
+        return res.status(400).json({
+          message: "Feeding have the same time with other!",
+        });
+      } else {
+        Feeding.findByIdAndUpdate(id, { hour, minute, level })
+          .then((result) => {
+            console.log(result);
+            return res.json({
+              message: "Feeding update successfully!",
+              feeding: result,
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    .catch((err) => console.log(err));
 };
