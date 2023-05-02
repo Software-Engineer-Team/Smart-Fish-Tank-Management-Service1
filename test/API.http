@@ -67,3 +67,24 @@ Content-Type: application/json
     "minute" : 4,
     "level" : 4
 }
+###
+
+
+PATCH http://localhost:3000/changepass
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "123456",
+    "newpassword": "123456"
+}
+
+###
+PATCH http://localhost:3000/changeAPI
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "123456",
+    "ada_key": "aio_yqQW24q8tTmMn9kxEkIwQuRaj47f"
+}

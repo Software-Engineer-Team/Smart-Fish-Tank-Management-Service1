@@ -61,3 +61,65 @@ exports.Register = (req, res, next) => {
     })
     .catch((err) => console.log(err));
 };
+
+exports.changePassword = (req, res, next) => {
+  console.log(req.body);
+  const username = req.body.username;
+  const password = req.body.password;
+  const newpassword = req.body.newpassword;
+  User.findOne({ username })
+    .then((user) => {
+      bcrypt
+        .compare(password, user.password)
+        .then((result) => {
+          if (result) {
+            bcrypt
+              .hash(newpassword, 10)
+              .then((newpass) => {
+                User.findByIdAndUpdate(user._id, { password: newpass })
+                  .then((result) => {
+                    return res.status(200).json({
+                      message: "Update successfully!",
+                    });
+                  })
+                  .catch((err) => console.log(err));
+              })
+              .catch((err) => console.log(err));
+          } else {
+            return res.status(401).json({
+              message: "Wrong password!",
+            });
+          }
+        })
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
+};
+
+exports.changeAPI = (req, res, next) => {
+  const username = req.body.username;
+  const password = req.body.password;
+  const ada_key = req.body.ada_key;
+  User.findOne({ username })
+    .then((user) => {
+      bcrypt
+        .compare(password, user.password)
+        .then((result) => {
+          if (result) {
+            User.findByIdAndUpdate(user._id, { ada_key: ada_key })
+              .then((result) => {
+                return res.status(200).json({
+                  message: "Update successfully!",
+                });
+              })
+              .catch((err) => console.log(err));
+          } else {
+            return res.status(401).json({
+              message: "Wrong password!",
+            });
+          }
+        })
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
+};
