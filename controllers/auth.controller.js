@@ -1,5 +1,6 @@
 const User = require("../models/user.database");
 const bcrypt = require("bcrypt");
+const encrypt_service = require("../service/crypto.service");
 
 exports.Login = (req, res, next) => {
   const username = req.body.username;
@@ -15,7 +16,11 @@ exports.Login = (req, res, next) => {
           if (result) {
             return res.status(200).json({
               message: "Login successfully!",
-              user: user,
+              user: {
+                username: user.username,
+                _id: user._id,
+                ada_key: encrypt_service.decrypt(user.ada_key),
+              },
             });
           } else {
             return res
@@ -45,7 +50,7 @@ exports.Register = (req, res, next) => {
             const newUser = new User({
               username: username,
               password: result,
-              ada_key: ada_key,
+              ada_key: encrypt_service.encrypt(ada_key),
             });
             newUser
               .save()
@@ -63,7 +68,6 @@ exports.Register = (req, res, next) => {
 };
 
 exports.changePassword = (req, res, next) => {
-  console.log(req.body);
   const username = req.body.username;
   const password = req.body.password;
   const newpassword = req.body.newpassword;
@@ -106,7 +110,9 @@ exports.changeAPI = (req, res, next) => {
         .compare(password, user.password)
         .then((result) => {
           if (result) {
-            User.findByIdAndUpdate(user._id, { ada_key: ada_key })
+            User.findByIdAndUpdate(user._id, {
+              ada_key: encrypt_service.encrypt(ada_key),
+            })
               .then((result) => {
                 return res.status(200).json({
                   message: "Update successfully!",
